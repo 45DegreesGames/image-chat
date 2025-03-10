@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './ui/button';
+import { ThemeToggle } from './theme-toggle';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -59,6 +60,7 @@ export function SiteHeader() {
           </NavigationMenu>
         </div>
         <div className="ml-auto flex items-center space-x-4">
+          <ThemeToggle />
           {user ? (
             <Button asChild variant="default">
               <Link href="/dashboard">Dashboard</Link>

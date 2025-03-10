@@ -63,37 +63,43 @@ export function Hero({
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-            {title}
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            {description}
-          </p>
-          <div className="mt-10 flex items-center gap-x-6">
-            {primaryAction && (
-              <Button asChild size="lg">
-                <Link href={primaryAction.href}>{primaryAction.text}</Link>
-              </Button>
-            )}
-            {secondaryAction && (
-              <Button asChild variant="outline" size="lg">
-                <Link href={secondaryAction.href}>{secondaryAction.text}</Link>
-              </Button>
-            )}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
+          <div className="mx-auto max-w-2xl lg:col-span-7 lg:mx-0 lg:pt-4">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
+              {title}
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              {description}
+            </p>
+            <div className="mt-10 flex items-center gap-x-6">
+              {primaryAction && (
+                <Button asChild size="lg">
+                  <Link href={primaryAction.href}>{primaryAction.text}</Link>
+                </Button>
+              )}
+              {secondaryAction && (
+                <Button asChild variant="outline" size="lg">
+                  <Link href={secondaryAction.href}>{secondaryAction.text}</Link>
+                </Button>
+              )}
+            </div>
           </div>
+          
+          {image && (
+            <div className="mt-16 sm:mt-24 lg:col-span-5 lg:mt-0">
+              <div className="relative overflow-hidden rounded-xl shadow-xl ring-1 ring-gray-400/10">
+                <img
+                  src={image}
+                  alt="App screenshot"
+                  className="w-full"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent opacity-30"></div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {image && (
-        <div className="mt-16 sm:mt-24 lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:transform lg:-translate-y-1/2">
-          <img
-            src={image}
-            alt="App screenshot"
-            className="w-full max-w-[48rem] rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-          />
-        </div>
-      )}
     </div>
   );
 } 
