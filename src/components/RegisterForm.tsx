@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Button } from './ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -52,103 +54,104 @@ export default function RegisterForm() {
 
   if (success) {
     return (
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">¡Registro exitoso!</h1>
-          <p className="mt-2 text-gray-600">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">¡Registro exitoso!</CardTitle>
+          <CardDescription className="text-center">
             Hemos enviado un correo de confirmación a {email}. Por favor, verifica tu bandeja de entrada.
-          </p>
-        </div>
-        <div className="mt-6">
-          <button
-            onClick={() => router.push('/login')}
-            className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
-          >
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex justify-center">
+          <Button onClick={() => router.push('/login')}>
             Ir a iniciar sesión
-          </button>
-        </div>
-      </div>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Crear cuenta</h1>
-        <p className="mt-2 text-gray-600">Regístrate para comenzar a usar Image Chat</p>
-      </div>
-
+    <Card className="w-full max-w-md">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl font-bold text-center">Crear cuenta</CardTitle>
+        <CardDescription className="text-center">
+          Regístrate para comenzar a usar Image Chat
+        </CardDescription>
+      </CardHeader>
+      
       {error && (
-        <div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg">
-          {error}
+        <div className="px-6">
+          <div className="p-3 text-sm text-red-600 bg-red-100 rounded-md">
+            {error}
+          </div>
         </div>
       )}
 
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="email" className="text-sm font-medium">
+              Correo electrónico
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+          <div className="space-y-2">
+            <label htmlFor="password" className="text-sm font-medium">
+              Contraseña
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-            Confirmar contraseña
-          </label>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            required
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+          <div className="space-y-2">
+            <label htmlFor="confirmPassword" className="text-sm font-medium">
+              Confirmar contraseña
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        <div>
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            className="w-full"
           >
             {loading ? 'Registrando...' : 'Registrarse'}
-          </button>
-        </div>
-      </form>
+          </Button>
+        </form>
+      </CardContent>
 
-      <div className="text-center">
-        <p className="text-sm text-gray-600">
+      <CardFooter className="flex justify-center">
+        <p className="text-sm text-muted-foreground">
           ¿Ya tienes una cuenta?{' '}
-          <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/login" className="font-medium text-primary hover:underline">
             Iniciar sesión
           </Link>
         </p>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 } 

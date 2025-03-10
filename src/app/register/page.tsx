@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import RegisterForm from '../../components/RegisterForm';
+import { PageContainer } from '../../components/page-container';
 
 export default function RegisterPage() {
   const { user, loading } = useAuth();
@@ -25,18 +26,22 @@ export default function RegisterPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="p-8 text-center">
-          <h1 className="text-3xl font-bold text-indigo-600">Image Chat</h1>
-          <p className="mt-2 text-gray-600">Cargando...</p>
+      <PageContainer>
+        <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+          <div className="p-8 text-center">
+            <h1 className="text-3xl font-bold text-primary">Image Chat</h1>
+            <p className="mt-2 text-muted-foreground">Cargando...</p>
+          </div>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <RegisterForm />
-    </div>
+    <PageContainer>
+      <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
+        <RegisterForm />
+      </div>
+    </PageContainer>
   );
 } 

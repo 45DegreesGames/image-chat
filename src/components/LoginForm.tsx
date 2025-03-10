@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
+import { useAuth } from '../context/AuthContext';
+import { Button } from './ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -25,68 +27,72 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Image Chat</h1>
-        <p className="mt-2 text-gray-600">Inicia sesión para continuar</p>
-      </div>
-
+    <Card className="w-full max-w-md">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl font-bold text-center">Image Chat</CardTitle>
+        <CardDescription className="text-center">
+          Inicia sesión para continuar
+        </CardDescription>
+      </CardHeader>
+      
       {error && (
-        <div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg">
-          {error}
+        <div className="px-6">
+          <div className="p-3 text-sm text-red-600 bg-red-100 rounded-md">
+            {error}
+          </div>
         </div>
       )}
 
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="email" className="text-sm font-medium">
+              Correo electrónico
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+          <div className="space-y-2">
+            <label htmlFor="password" className="text-sm font-medium">
+              Contraseña
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        <div>
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            className="w-full"
           >
             {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-          </button>
-        </div>
-      </form>
+          </Button>
+        </form>
+      </CardContent>
 
-      <div className="text-center">
-        <p className="text-sm text-gray-600">
+      <CardFooter className="flex justify-center">
+        <p className="text-sm text-muted-foreground">
           ¿No tienes una cuenta?{' '}
-          <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/register" className="font-medium text-primary hover:underline">
             Regístrate
           </Link>
         </p>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 } 
