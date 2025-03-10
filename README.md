@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Image Chat
 
-## Getting Started
+Una aplicación SAAS que permite a los usuarios subir imágenes y chatear con IA sobre ellas utilizando la API de Gemini.
 
-First, run the development server:
+## Características
+
+- Autenticación de usuarios con Supabase
+- Subida de imágenes a Supabase Storage
+- Chat con IA sobre imágenes utilizando Gemini API
+- Interfaz de usuario moderna y responsive
+
+## Tecnologías utilizadas
+
+- Next.js 14 con App Router
+- TypeScript
+- Tailwind CSS
+- Supabase (autenticación, base de datos y almacenamiento)
+- Google Gemini API (modelo gemini-2.0-flash-exp)
+- React Dropzone para subida de imágenes
+
+## Requisitos previos
+
+- Node.js 18 o superior
+- Cuenta de Supabase
+- Clave de API de Google Gemini
+
+## Configuración
+
+1. Clona este repositorio:
+
+```bash
+git clone https://github.com/tu-usuario/image-chat.git
+cd image-chat
+```
+
+2. Instala las dependencias:
+
+```bash
+npm install
+```
+
+3. Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
+NEXT_PUBLIC_GEMINI_API_KEY=tu_clave_api_de_gemini
+```
+
+4. Configura la base de datos de Supabase ejecutando el script SQL en `supabase/schema.sql` en el editor SQL de Supabase.
+
+5. Inicia el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+image-chat/
+├── src/
+│   ├── app/                  # Páginas de Next.js
+│   ├── components/           # Componentes React
+│   ├── context/              # Contextos de React
+│   ├── lib/                  # Utilidades y configuración
+│   └── types/                # Definiciones de tipos
+├── public/                   # Archivos estáticos
+├── supabase/                 # Configuración de Supabase
+└── ...
+```
 
-## Learn More
+## Flujo de la aplicación
 
-To learn more about Next.js, take a look at the following resources:
+1. El usuario accede a la aplicación y se autentica
+2. En el dashboard, el usuario puede:
+   - Subir nuevas imágenes
+   - Iniciar un nuevo chat seleccionando imágenes
+   - Ver chats anteriores
+3. En la interfaz de chat, el usuario puede hacer preguntas sobre las imágenes seleccionadas
+4. La API de Gemini procesa las imágenes y la pregunta, y genera una respuesta
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Licencia
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
