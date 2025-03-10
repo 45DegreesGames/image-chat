@@ -14,8 +14,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Marcar como montado para evitar errores de hidratación
+    setMounted(true);
+    
     // Verificar si hay una sesión activa
     const checkSession = async () => {
       try {
@@ -70,6 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw error;
     }
   };
+
+  // No renderizar nada hasta que el componente esté montado en el cliente
+  // Esto evita errores de hidratación
+  if (!mounted) {
+    return <>{children}</>;
+  }
 
   return (
     <AuthContext.Provider value={{ user, loading, signIn, signOut }}>

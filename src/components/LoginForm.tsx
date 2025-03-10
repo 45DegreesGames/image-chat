@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -77,6 +78,15 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
+
+      <div className="text-center">
+        <p className="text-sm text-gray-600">
+          ¿No tienes una cuenta?{' '}
+          <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+            Regístrate
+          </Link>
+        </p>
+      </div>
     </div>
   );
 } 

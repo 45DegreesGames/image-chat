@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import LoginForm from '../../components/LoginForm';
@@ -8,12 +8,20 @@ import LoginForm from '../../components/LoginForm';
 export default function LoginPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    
     if (!loading && user) {
       router.push('/dashboard');
     }
   }, [user, loading, router]);
+
+  // No renderizar nada hasta que el componente esté montado en el cliente
+  if (!mounted) {
+    return null;
+  }
 
   if (loading) {
     return (

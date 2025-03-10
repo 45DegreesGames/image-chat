@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
-import Dashboard from '../../components/Dashboard';
+import RegisterForm from '../../components/RegisterForm';
 
-export default function DashboardPage() {
+export default function RegisterPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -13,8 +13,8 @@ export default function DashboardPage() {
   useEffect(() => {
     setMounted(true);
     
-    if (!loading && !user) {
-      router.push('/login');
+    if (!loading && user) {
+      router.push('/dashboard');
     }
   }, [user, loading, router]);
 
@@ -34,9 +34,9 @@ export default function DashboardPage() {
     );
   }
 
-  if (!user) {
-    return null; // No renderizar nada mientras redirige
-  }
-
-  return <Dashboard />;
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <RegisterForm />
+    </div>
+  );
 } 
