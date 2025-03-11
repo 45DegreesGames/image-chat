@@ -1,13 +1,13 @@
 # Image Chat
 
-Una aplicación SAAS que permite a los usuarios subir imágenes y chatear con IA sobre ellas utilizando la API de Gemini.
+Una aplicación web que te permite chatear con tus imágenes utilizando IA.
 
 ## Características
 
 - Autenticación de usuarios con Supabase
-- Subida de imágenes a Supabase Storage
-- Chat con IA sobre imágenes utilizando Gemini API
-- Interfaz de usuario moderna y responsive
+- Subida de imágenes
+- Chat con imágenes utilizando la API de Gemini
+- Interfaz de usuario moderna con soporte para tema oscuro
 
 ## Tecnologías utilizadas
 
@@ -21,41 +21,64 @@ Una aplicación SAAS que permite a los usuarios subir imágenes y chatear con IA
 ## Requisitos previos
 
 - Node.js 18 o superior
-- Cuenta de Supabase
-- Clave de API de Google Gemini
+- Cuenta en Supabase
+- Cuenta en Google Cloud (para la API de Gemini)
 
 ## Configuración
 
 1. Clona este repositorio:
-
-```bash
-git clone https://github.com/tu-usuario/image-chat.git
-cd image-chat
-```
+   ```bash
+   git clone https://github.com/yourusername/image-chat.git
+   cd image-chat
+   ```
 
 2. Instala las dependencias:
-
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 3. Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
+   NEXT_PUBLIC_GEMINI_API_KEY=tu_clave_api_de_gemini
+   ```
 
-```
-NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
-NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
-NEXT_PUBLIC_GEMINI_API_KEY=tu_clave_api_de_gemini
-```
+4. Configura Supabase para la autenticación:
+   - Sigue las instrucciones en el archivo `supabase/README.md` para configurar la autenticación en Supabase.
+   - Ejecuta el script SQL en `supabase/setup.sql` para configurar las tablas y políticas de seguridad.
 
-4. Configura la base de datos de Supabase ejecutando el script SQL en `supabase/schema.sql` en el editor SQL de Supabase.
+## Desarrollo
 
-5. Inicia el servidor de desarrollo:
+Para iniciar el servidor de desarrollo:
 
 ```bash
 npm run dev
 ```
 
-6. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+
+## Solución de problemas de autenticación
+
+Si tienes problemas con la autenticación, asegúrate de:
+
+1. Haber ejecutado el script SQL en `supabase/setup.sql` para configurar la autenticación sin confirmación de correo electrónico.
+2. Haber configurado correctamente las variables de entorno en `.env.local`.
+3. Verificar en la consola del navegador si hay errores relacionados con Supabase.
+
+## Construcción para producción
+
+Para construir la aplicación para producción:
+
+```bash
+npm run build
+```
+
+Para iniciar la aplicación en modo producción:
+
+```bash
+npm start
+```
 
 ## Estructura del proyecto
 

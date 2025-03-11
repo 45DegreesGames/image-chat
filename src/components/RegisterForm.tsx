@@ -11,7 +11,6 @@ export default function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +33,7 @@ export default function RegisterForm() {
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { error, data } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -43,7 +42,8 @@ export default function RegisterForm() {
         throw error;
       }
 
-      setSuccess(true);
+      // Redirigir a la página de inicio de sesión
+      router.push('/login?registered=true');
     } catch (err: any) {
       console.error('Error al registrar usuario:', err);
       setError(err.message || 'Error al registrar usuario');
@@ -51,24 +51,6 @@ export default function RegisterForm() {
       setLoading(false);
     }
   };
-
-  if (success) {
-    return (
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">¡Registro exitoso!</CardTitle>
-          <CardDescription className="text-center">
-            Hemos enviado un correo de confirmación a {email}. Por favor, verifica tu bandeja de entrada.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex justify-center">
-          <Button onClick={() => router.push('/login')}>
-            Ir a iniciar sesión
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card className="w-full max-w-md">

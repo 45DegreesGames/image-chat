@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './ui/button';
@@ -15,7 +17,18 @@ import {
 import { cn } from '../lib/utils';
 
 export function SiteHeader() {
-  const { user } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const { user } = useAuth();
+      setIsLoggedIn(!!user);
+    } catch (error) {
+      console.error('Error al verificar autenticación:', error);
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -61,7 +74,7 @@ export function SiteHeader() {
         </div>
         <div className="ml-auto flex items-center space-x-4">
           <ThemeToggle />
-          {user ? (
+          {mounted && isLoggedIn ? (
             <Button asChild variant="default">
               <Link href="/dashboard">Dashboard</Link>
             </Button>

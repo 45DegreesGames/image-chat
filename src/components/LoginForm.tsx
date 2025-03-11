@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
@@ -9,18 +10,29 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const { signIn } = useAuth();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Verificar si el usuario viene de la página de registro
+    const registered = searchParams.get('registered');
+    if (registered === 'true') {
+      setSuccess('¡Registro exitoso! Ahora puedes iniciar sesión con tus credenciales.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(null);
 
     try {
       await signIn(email, password);
-    } catch (err) {
-      setError('Error al iniciar sesión. Verifica tus credenciales.');
-      console.error(err);
+    } catch (err: any) {
+      console.error('Error al iniciar sesión:', err);
+      setError('Error al iniciar sesión. Verifica tus credenciales o la configuración de Supabase.');
     } finally {
       setLoading(false);
     }
@@ -36,9 +48,23 @@ export default function LoginForm() {
       </CardHeader>
       
       {error && (
-        <div className="px-6">
+        <div className="px-6 mb-4">
           <div className="p-3 text-sm text-red-600 bg-red-100 rounded-md">
-            {error}
+            <p>{error}</p>
+            <p className="mt-2">
+              Si es la primera vez que usas la aplicación, es posible que necesites 
+              <Link href="/setup" className="font-medium text-red-700 hover:underline ml-1">
+                configurar Supabase
+              </Link>.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {success && (
+        <div className="px-6 mb-4">
+          <div className="p-3 text-sm text-green-600 bg-green-100 rounded-md">
+            {success}
           </div>
         </div>
       )}
@@ -85,11 +111,17 @@ export default function LoginForm() {
         </form>
       </CardContent>
 
-      <CardFooter className="flex justify-center">
+      <CardFooter className="flex flex-col space-y-4">
         <p className="text-sm text-muted-foreground">
           ¿No tienes una cuenta?{' '}
           <Link href="/register" className="font-medium text-primary hover:underline">
             Regístrate
+          </Link>
+        </p>
+        <p className="text-sm text-muted-foreground">
+          ¿Problemas con la configuración?{' '}
+          <Link href="/setup" className="font-medium text-primary hover:underline">
+            Ver guía de configuración
           </Link>
         </p>
       </CardFooter>
